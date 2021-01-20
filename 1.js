@@ -3,39 +3,40 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
-let storage = [];
+let a = [];
+
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
 
-app.get('/guide', function (req,res){
-    res.send(storage);
+app.get('/', function (req,res){
+    res.send(a);
 });
 
 
-app.get('/guide/:id', function (req,res){
+app.get('/:id', function (req,res){
     const id = req.params.id;
-    const item = storage[id];
-    if (item===null|| id>=storage.length) {
+    const item = a[id];
+    if (item===null|| id>=a.length) {
         res.sendStatus(404);
-    } else res.send(storage[id]);
+    } else res.send(a[id]);
 
 });
 
-app.post('/guide',(req,res)=>{
-    const newid = storage.push(req.body)-1;
+app.post('/',(req,res)=>{
+    const newid = a.push(req.body)-1;
     res.send(newid.toString());
 });
-app.put('/guide/:id',(req,res) =>{
+app.put('/:id',(req,res) =>{
     const id = req.params.id;
-    storage[id] = req.body;
+    a[id] = req.body;
     res.send(id.toString());
 });
-app.delete('/guide/:id', (req,res) =>{
+app.delete('/:id', (req,res) =>{
     const id = req.params.id;
-    storage[id] = null;
+    a[id] = null;
     res.send(id.toString()  );
 });
-app.listen(3000,function(){console.log('Server started')});
+app.listen(8080);
